@@ -58,7 +58,7 @@ app.post('/createCard', (req, res) => {
     db('card').insert({
         lid:lid,
         title:title,
-    }).then(resp => res.json('success'))
+    }).returning('cid').then(resp => res.json(resp[0]))
     
 })
 
