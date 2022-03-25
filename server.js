@@ -26,7 +26,7 @@ const db = knex({
   });*/
 
   
-
+console.log('hi')
 
 
 
