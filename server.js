@@ -71,9 +71,9 @@ app.post('/getProjects', (req, res) => {
 app.post('/getList', (req, res) => {
     const {pid} = req.body;
 
-    db.select('*').from('projects')
-    .innerJoin('list', 'list.pid',`projects.pid`)
-    .innerJoin('card', 'card.lid', 'list.lid')
+    db.select('list.lid', 'list.title').from('projects')
+    .join('list', 'list.pid',`projects.pid`)
+    .join('card', 'card.lid', 'list.lid')
     .where('projects.pid', pid)
     .orderBy('list.lid').then(response => res.json(response))
     .catch(err => res.json(err))
