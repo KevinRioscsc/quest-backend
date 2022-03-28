@@ -11,7 +11,7 @@ const db = knex({
     rejectUnauthorized: false
         }
     }
-});
+})
 /*
 const db = knex({
     client: 'pg',
@@ -71,13 +71,12 @@ app.post('/getProjects', (req, res) => {
 app.post('/getList', (req, res) => {
     const {pid} = req.body;
 
-    db('projects')
-    .join('list', 'list.pid',`projects.pid`)
-    .join('card', 'card.lid', 'list.lid')
-    .select('list.lid','list.title','card.cid','card.titlecard')
-    .where('project.pid', pid)
+    db.select('*').from('projects')
+    .innerJoin('list', 'list.pid',`projects.pid`)
+    .innerJoin('card', 'card.lid', 'list.lid')
+    .where('projects.pid', pid)
     .orderBy('list.lid').then(response => res.json(response))
-    
+    .catch(err => res.json(err))
     //db('list').where('pid', '=', pid).then(response => res.json(response))
 
 })
