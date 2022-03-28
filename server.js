@@ -54,11 +54,11 @@ app.post('/createProject', (req, res) => {
     
 })
 app.post('/createCard', (req, res) => {
-    const {lid, title} = req.body;
+    const {lid, titleCard} = req.body;
 
     db('card').insert({
         lid:lid,
-        title:title,
+        titleCard:titleCard,
     }).returning('cid').then(resp => res.json(resp[0]))
     
 })
