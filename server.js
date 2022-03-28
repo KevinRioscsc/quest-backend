@@ -75,6 +75,7 @@ app.post('/getList', (req, res) => {
     .join('list', 'list.pid',`projects.pid`)
     .join('card', 'card.lid', 'list.lid')
     .select('list.lid','list.title','card.cid','card.title')
+    .where('project.pid', pid)
     .orderBy('list.lid').then(response => res.json(response))
     .catch(err => res.json(err))
     //db('list').where('pid', '=', pid).then(response => res.json(response))
