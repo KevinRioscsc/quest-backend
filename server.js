@@ -54,11 +54,11 @@ app.post('/createProject', (req, res) => {
     
 })
 app.post('/createCard', (req, res) => {
-    const {lid, titleCard} = req.body;
+    const {lid, titlecard} = req.body;
 
     db('card').insert({
         lid:lid,
-        titleCard:titleCard,
+        titlecard:titlecard,
     }).returning('cid').then(resp => res.json(resp[0]))
     
 })
@@ -74,7 +74,7 @@ app.post('/getList', (req, res) => {
     db('projects')
     .join('list', 'list.pid',`projects.pid`)
     .join('card', 'card.lid', 'list.lid')
-    .select('list.lid','list.title','card.cid','card.titleCard')
+    .select('list.lid','list.title','card.cid','card.titlecard')
     .where('project.pid', pid)
     .orderBy('list.lid').then(response => res.json(response))
     
