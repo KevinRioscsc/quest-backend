@@ -12,7 +12,8 @@ const db = knex({
         }
     }
 });
-/*knex({
+/*
+const db = knex({
     client: 'pg',
     connection: {
       host : '127.0.0.1',
@@ -68,8 +69,15 @@ app.post('/getProjects', (req, res) => {
 
 })
 app.post('/getList', (req, res) => {
-    const {pid} = req.body
-    db('list').where('pid', '=', pid).then(response => res.json(response))
+    const {pid} = req.body;
+
+    db('projects')
+    .join('list', 'list.pid',`projects.pid`)
+    .join('card', 'card.lid', 'list.lid')
+    .select('list.lid','list.title','card.cid','card.title')
+    .orderBy('list.lid').then(response => res.json(response))
+    .catch(err => res.json(err))
+    //db('list').where('pid', '=', pid).then(response => res.json(response))
 
 })
 app.post('/getCard', (req, res) => {
